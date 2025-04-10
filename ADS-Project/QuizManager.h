@@ -28,8 +28,8 @@ public:
 
 	std::list<std::string> GetQuizFilesNames(); // Fixed: Use std::list and std::string  
 
-	Quiz Load(const std::string& filePath);
+	Quiz Load();
 
-	Quiz Create();
+	Quiz Create(); // needs to be implemented
 
 };

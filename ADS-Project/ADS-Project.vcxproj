@@ -129,6 +129,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ADS-Project.cpp" />
+    <ClCompile Include="MultChoiceQuestion.cpp" />
+    <ClCompile Include="Quiz.cpp" />
+    <ClCompile Include="QuizManager.cpp" />
+    <ClCompile Include="QuizQuestion.cpp" />
+    <ClCompile Include="TrueFalseQuestion.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="IEvaluable.h" />
+    <ClInclude Include="Leaderboard.h" />
+    <ClInclude Include="MultChoiceQuestion.h" />
+    <ClInclude Include="Quiz.h" />
+    <ClInclude Include="QuizManager.h" />
+    <ClInclude Include="QuizQuestion.h" />
+    <ClInclude Include="TrueFalseQuestion.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

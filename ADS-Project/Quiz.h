@@ -15,16 +15,21 @@ public:
 	Quiz();
 
 	//atributes
-	list<QuizQuestion> questions;
+	list<QuizQuestion> myQuestions;
 
 	std::string quizName;
 
 	//functions
+
+	//To be implemented
+
+	/*
 	int CalculateResult(int score);
 
 	void ShuffleQuestions();
 
 	static void CreateQuiz(std::string Path);
+	*/
 
 	bool Evaluate() override;
 

@@ -9,7 +9,7 @@ using namespace std;
 class TrueFalseQuestion : public QuizQuestion {
 private:
 	//atributes
-	bool coorectAnswer;
+	bool correctAnswer;
 
 public:
 

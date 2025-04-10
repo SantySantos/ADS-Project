@@ -19,7 +19,6 @@ public:
 	//constructor
 	MultChoiceQuestion(string newQuestion, string choices, int index, int points);
 
-
 	//functions
 	bool Evaluate(int index);
 

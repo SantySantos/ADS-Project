@@ -33,7 +33,7 @@ Quiz QuizManager::Create() {
 	return Quiz();
 }
 
-Quiz QuizManager::Load(const std::string& filePath) { // static 
+Quiz QuizManager::Load() { // static 
 
     //attributes
     int currentIndex = 0;
@@ -92,7 +92,7 @@ Quiz QuizManager::Load(const std::string& filePath) { // static
     }
     else {
         fs::create_directory(directoryQuestions);
-        Load(filePath); //recursive call to load the quiz after its created 
+        Load(); //recursive call to load the quiz after its created 
     }
 
     currentIndex = 0; //resetting the index 
@@ -105,7 +105,7 @@ void QuizManager::OptionChosen(int currentOption) {
     switch (currentOption)
     {
     case 1:
-        //Load();
+        Load();
         //Play();
         break;
     case 2:
