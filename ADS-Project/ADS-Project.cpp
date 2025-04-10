@@ -1,8 +1,10 @@
 #include <iostream>
+#include <string>
+#include "QuizManager.h"
 
 int main()
 {
-	std::cout << "Hello World!\n ";
+	QuizManager* myQuiz = new QuizManager(); //creating the quiz manager object
 
 	return 0;
 }
