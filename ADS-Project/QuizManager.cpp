@@ -11,6 +11,7 @@ namespace fs = std::filesystem;
 QuizManager::QuizManager(): FilesFolder(fs::current_path()), directoryQuestions(FilesFolder / "Quizes") {
 	
 	DisplayOptions();
+    
 }
 
 //functions implementations
@@ -34,6 +35,8 @@ Quiz QuizManager::Create() {
 }
 
 Quiz QuizManager::Load() { // static 
+
+    GetQuizFilesNames(); //getting the quiz file names
 
     //attributes
     int currentIndex = 0;
