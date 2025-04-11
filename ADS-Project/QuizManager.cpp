@@ -16,9 +16,8 @@ QuizManager::QuizManager(): FilesFolder(fs::current_path()), directoryQuestions(
 
 //functions implementations
 
-list<string> QuizManager::GetQuizFilesNames() {
+vector<string> QuizManager::GetQuizFilesNames() {
 
-	
 	int currentIndex = 0;
 	//looping thorught the contains of the file and getting the names of them
 	for (auto entry : fs::directory_iterator(directoryQuestions)) //auto is like var in c#, letting the complier figure out the type
@@ -42,7 +41,7 @@ Quiz QuizManager::Load() { // static
     int currentIndex = 0;
 
     //Load the quiz from the file path
-    Quiz quiz;
+    Quiz Chosenquiz;
 
     string userInput = ""; //variable to store the user input
     int userOption = 0;
@@ -75,7 +74,19 @@ Quiz QuizManager::Load() { // static
 
                 if (userOption > 0 && userOption <= quizFileNames.size())
                 {
-                    break;
+                    //open the file
+                    std::string chosenFile = quizFileNames[userOption - 1]; //getting the quiz chosen name from the vector.
+
+					std::ifstream file(directoryQuestions / chosenFile); //opening the file
+
+					Chosenquiz.quizName = chosenFile; //setting the quiz name
+
+                    for (std::string line; getline(file, line);) {  //reading the file line by line
+                    
+                        
+
+                    }
+                    
                 }
                 else
                 {
@@ -84,22 +95,22 @@ Quiz QuizManager::Load() { // static
             }
             catch (std::exception)
             {
-                cout << "Please enter a valid number" << endl;
+                cout << "Please enter a number" << endl;
             }
 
             cin.ignore();
             getline(cin, userInput);
 
         }
-
     }
     else {
+
         fs::create_directory(directoryQuestions);
         Load(); //recursive call to load the quiz after its created 
     }
 
     currentIndex = 0; //resetting the index 
-    return quiz;
+    return Chosenquiz;
 }
 void QuizManager::OptionChosen(int currentOption) {
 
