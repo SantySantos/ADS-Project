@@ -18,7 +18,7 @@ public:
 
 	const fs::path directoryQuestions = FilesFolder / "Quizes"; // Constant QUIZ_FOLDER 
 
-	list<string> quizFileNames; // list to get the .cvs files names in the folder, and open them eventually.
+	vector<string> quizFileNames; // list to get the .cvs files names in the folder, and open them eventually.
 
 	//functions
 
@@ -26,7 +26,7 @@ public:
 
 	void OptionChosen(int option);
 
-	std::list<std::string> GetQuizFilesNames(); // Fixed: Use std::list and std::string  
+	vector<std::string> GetQuizFilesNames(); // Fixed: Use std::vector and std::string  
 
 	Quiz Load();
 
