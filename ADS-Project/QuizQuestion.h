@@ -17,6 +17,8 @@ public:
 
 	std::string getQuestion();
 
+	std::string setQuestion(const string& tempQuestion); 
+
 	//functions
 	int getPoints();
 

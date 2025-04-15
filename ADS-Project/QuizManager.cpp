@@ -11,7 +11,6 @@ namespace fs = std::filesystem;
 QuizManager::QuizManager(): FilesFolder(fs::current_path()), directoryQuestions(FilesFolder / "Quizes") {
 	
 	DisplayOptions();
-    
 }
 
 //functions implementations
@@ -74,6 +73,8 @@ Quiz QuizManager::Load() { // static
 
                 if (userOption > 0 && userOption <= quizFileNames.size())
                 {
+					QuizQuestion tempQuizQuestion; //creating a temporary quiz question object
+
                     //open the file
                     std::string chosenFile = quizFileNames[userOption - 1]; //getting the quiz chosen name from the vector.
 
@@ -83,8 +84,11 @@ Quiz QuizManager::Load() { // static
 
                     for (std::string line; getline(file, line);) {  //reading the file line by line
                     
+                        std::string tempQuestion = line.substr(0, line.find(',')); //getting the question
+                        tempQuizQuestion.setQuestion(tempQuestion);
                         
 
+						//Chosenquiz.myQuestions.push_back(Question(question)); //creating a question object and adding it to the quiz
                     }
                     
                 }
