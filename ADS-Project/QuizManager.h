@@ -5,6 +5,7 @@
 #include <filesystem>  
 #include <iostream>  
 #include <list> 
+#include "MultChoiceQuestion.h"
 
 namespace fs = std::filesystem;
 
@@ -25,6 +26,8 @@ public:
 	void DisplayOptions();
 
 	void OptionChosen(int option);
+
+	MultChoiceQuestion InsertingElementsToQuiz(std::ifstream& file);
 
 	vector<std::string> GetQuizFilesNames(); // Fixed: Use std::vector and std::string  
 
