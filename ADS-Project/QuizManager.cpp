@@ -2,6 +2,7 @@
 #include <string>
 #include "QuizManager.h"
 #include <filesystem>
+#include "MultChoiceQuestion.h"
 #include <fstream>
 
 using namespace std;
@@ -45,11 +46,10 @@ Quiz QuizManager::Load() { // static
     string userInput = ""; //variable to store the user input
     int userOption = 0;
 
-    if (fs::exists(directoryQuestions)) //checking if the golder exits, if not, create it
+    if (fs::exists(directoryQuestions)) //checking if the dir exits, if not, create it
     {
         // PARSE THE FILE LINE BY LINE, FOR EACH LINE SPLIT USING THE DELIMITER "," AND STORE THE VALUES IN A QUIZ OBJECT
         // CREATE the question and addd it to quiz
-        cout << "Please choose one of the options below to start answering your quiz" << endl;
 
         for (std::string myFile : quizFileNames)
         {
@@ -57,12 +57,12 @@ Quiz QuizManager::Load() { // static
             cout << currentIndex << ". "; //printing the index of the file
             cout << myFile << endl; //printing the file names
         }
-        cout << "";
+        cout << endl;
 
         cout << "Please choose one of the options:" << endl;
 
         cin.ignore();
-        getline(cin, userInput); // Corrected the order of arguments for getline
+        std::getline(cin, userInput); // Corrected the order of arguments for getline
 
         //getting user input until it does not fail anymore and inserts a valid value
         while (true)
@@ -73,7 +73,13 @@ Quiz QuizManager::Load() { // static
 
                 if (userOption > 0 && userOption <= quizFileNames.size())
                 {
-					QuizQuestion tempQuizQuestion; //creating a temporary quiz question object
+                    //tempHolders
+                    std::string tempQuestion = "";
+                    std::string answers[4];
+                    std::string tempCorrectIndex = "";
+                    int tempIndex = 0;
+                    std::string StempSCore = "";
+					int tempScore = 0;
 
                     //open the file
                     std::string chosenFile = quizFileNames[userOption - 1]; //getting the quiz chosen name from the vector.
@@ -82,14 +88,22 @@ Quiz QuizManager::Load() { // static
 
 					Chosenquiz.quizName = chosenFile; //setting the quiz name
 
-                    for (std::string line; getline(file, line);) {  //reading the file line by line
-                    
-                        std::string tempQuestion = line.substr(0, line.find(',')); //getting the question
-                        tempQuizQuestion.setQuestion(tempQuestion);
-                        
+                    //reading the file line by line
+					std::getline(file, tempQuestion, ','); 
+                    std::getline(file, answers[0], ',');
+                    std::getline(file, answers[1], ',');
+                    std::getline(file, answers[2], ',');
+                    std::getline(file, answers[3], ',');
+                    std::getline(file, tempCorrectIndex, ',');
+					tempIndex = std::stoi(tempCorrectIndex); //converting the string to int
+                    std::getline(file, StempSCore, '\n');
+					tempScore = std::stoi(StempSCore); 
 
-						//Chosenquiz.myQuestions.push_back(Question(question)); //creating a question object and adding it to the quiz
-                    }
+                    MultChoiceQuestion tempQuizQuestion(tempQuestion, answers, tempIndex, tempScore);
+
+
+				    Chosenquiz.myQuestions.push_back(MultChoiceQuestion(tempQuizQuestion)); //creating a question object and adding it to the quiz
+                    
                     
                 }
                 else
@@ -103,8 +117,7 @@ Quiz QuizManager::Load() { // static
             }
 
             cin.ignore();
-            getline(cin, userInput);
-
+            std::getline(cin, userInput);
         }
     }
     else {
