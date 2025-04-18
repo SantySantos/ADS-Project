@@ -10,16 +10,20 @@ class QuizQuestion : public IEvaluable {
 
 protected:
 	//atributes
-	std::string question;
+	string question;
 
 public:
 	
 	//attributes
 	int pointValue;
 
-	std::string getQuestion();
+	string getQuestion();
 
+<<<<<<< HEAD
+	string setQuestion(const string& tempQuestion); 
+=======
 	std::string setQuestion(const std::string& tempQuestion); 
+>>>>>>> 99797b2685ba06bbad9e740a9e26320182ae7cd4
 
 	//functions
 	int getPoints();
