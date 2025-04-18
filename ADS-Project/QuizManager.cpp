@@ -3,6 +3,7 @@
 #include "QuizManager.h"
 #include <filesystem>
 #include "MultChoiceQuestion.h"
+#include "TrueFalseQuestion.h"
 #include <fstream>
 
 using namespace std;
@@ -84,7 +85,7 @@ Quiz QuizManager::Load() { // static
                     while (file.peek() != EOF)
                     {
                         
-                        Chosenquiz.myQuestions.push_back(MultChoiceQuestion(InsertingElementsToQuiz(file))); //creating a question object and adding it to the quiz
+                        Chosenquiz.myQuestions.push_back(QuizQuestion(InsertingElementsToQuiz(file))); //creating a question object and adding it to the quiz
                         
                     }   
 
@@ -117,32 +118,58 @@ Quiz QuizManager::Load() { // static
     return Chosenquiz;
 }
 
-MultChoiceQuestion QuizManager::InsertingElementsToQuiz(ifstream& file)
+QuizQuestion QuizManager::InsertingElementsToQuiz(ifstream& file)
 {
-	Quiz tempQuiz;
-    //tempHolders
-    std::string tempQuestion = "";
-    std::string answers[4];
-    std::string tempCorrectIndex = "";
-    int tempIndex = 0;
-    std::string StempSCore = "";
-    int tempScore = 0;
+    try
+    {
+        //tempHolders
+        std::string questionType = "";
+        std::string tempQuestion = "";
+        std::string answers[4];
+        std::string tempCorrectIndex = "";
+        int tempIndex = 0;
+        std::string StempSCore = "";
+        int tempScore = 0;
 
-   
-    //reading the file line by line
-    std::getline(file, tempQuestion, ',');
-    std::getline(file, answers[0], ',');
-    std::getline(file, answers[1], ',');
-    std::getline(file, answers[2], ',');
-    std::getline(file, answers[3], ',');
-    std::getline(file, tempCorrectIndex, ',');
-    tempIndex = std::stoi(tempCorrectIndex); //converting the string to int
-    std::getline(file, StempSCore, '\n');
-    tempScore = std::stoi(StempSCore);
 
-    MultChoiceQuestion tempQuizQuestion(tempQuestion, answers, tempIndex, tempScore);
+        //reading the file line by line
+        std::getline(file, questionType, ','); //reading the first line of the file
+        if (questionType != "M") //checking if the question type is MULTCHOICE
+        {
 
-    return tempQuizQuestion; //returning the question object
+            std::getline(file, tempQuestion, ',');
+            std::getline(file, answers[0], ',');
+            std::getline(file, answers[1], ',');
+            std::getline(file, answers[2], ',');
+            std::getline(file, answers[3], ',');
+            std::getline(file, tempCorrectIndex, ',');
+            tempIndex = std::stoi(tempCorrectIndex); //converting the string to int
+            std::getline(file, StempSCore, '\n');
+            tempScore = std::stoi(StempSCore);
+
+            MultChoiceQuestion tempQuizQuestion(tempQuestion, answers, tempIndex, tempScore);
+
+            return tempQuizQuestion; //returning the question object
+        }
+        else if (questionType == "B") //checking if the question type is true or false 
+        {
+			std::getline(file, tempQuestion, ',');
+			std::getline(file, tempCorrectIndex, ',');
+			tempIndex = std::stoi(tempCorrectIndex); //converting the string to int
+			std::getline(file, StempSCore, '\n');
+			tempScore = std::stoi(StempSCore);
+			TrueFalseQuestion tempQuizQuestion(tempQuestion, tempIndex, tempScore);
+			return tempQuizQuestion; //returning the question object
+        }
+        else {
+			throw std::invalid_argument("Invalid question type");
+        }
+    }
+    catch (const std::exception&)
+    {
+		cout << "Sorry, we have a problem..." << endl;
+    }
+    
 
 }
 
