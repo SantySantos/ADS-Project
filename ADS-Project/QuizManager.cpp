@@ -29,8 +29,28 @@ vector<string> QuizManager::GetQuizFilesNames() {
 }
 
 Quiz QuizManager::Create() {
+    int questionNum;
+    Quiz quiz;
 	cout << "CREATE MUST BE IMPLEMENTED" << endl;
-	return Quiz();
+    cout << "How many questions would you like to add?" << endl;
+    cin >> questionNum;
+    for (int i = 0; i < questionNum;) {
+        string question;
+        string choices[4];
+        int answerIndex;
+        int points;
+        cout << "Type question " << i << ": " << endl;
+        getline(cin, question);
+        for (int j = 0; j < 4; j++) {
+            cout << "Type choice " << j << ": " << endl;
+        }
+        cout << "Which choice is the correct one?" << endl;
+        cin >> answerIndex;
+        cout << "How many points is this question worth?";
+        cin >> points;
+    }
+
+	return quiz;
 }
 
 Quiz QuizManager::Load() { // static 
