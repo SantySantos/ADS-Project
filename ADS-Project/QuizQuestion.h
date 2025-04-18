@@ -17,13 +17,11 @@ public:
 	//attributes
 	int pointValue;
 
-	string getQuestion();
+	 string getQuestion();
 
-<<<<<<< HEAD
-	string setQuestion(const string& tempQuestion); 
-=======
+	void DisplayQuestion();
+
 	std::string setQuestion(const std::string& tempQuestion); 
->>>>>>> 99797b2685ba06bbad9e740a9e26320182ae7cd4
 
 	//functions
 	int getPoints();

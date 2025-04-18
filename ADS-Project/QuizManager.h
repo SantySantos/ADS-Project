@@ -6,6 +6,7 @@
 #include <iostream>  
 #include <list> 
 #include "MultChoiceQuestion.h"
+#include "TrueFalseQuestion.h"
 
 namespace fs = std::filesystem;
 
@@ -13,6 +14,10 @@ class QuizManager {
 public:
 	//constructor
 	QuizManager();
+
+	static int playerScore;  //static variable to keep the score of the player
+
+	static Quiz quizToPlay;
 
 	//attributes
 	fs::path FilesFolder = fs::current_path();
@@ -27,7 +32,8 @@ public:
 
 	void OptionChosen(int option);
 
-	QuizQuestion InsertingElementsToQuiz(std::ifstream& file);
+	QuizQuestion InsertingToQuiz(std::ifstream& file);
+
 
 	vector<std::string> GetQuizFilesNames(); // Fixed: Use std::vector and std::string  
 
