@@ -1,5 +1,9 @@
 #include "QuizQuestion.h"
 #include <iostream>
+#include <string>
+#include "MultChoiceQuestion.h"
+#include "TrueFalseQuestion.h"
+
 
 using namespace std;
 
@@ -19,6 +23,9 @@ std::string QuizQuestion::setQuestion(const std::string& tempQuestion)
 	return question;
 }
 
+void QuizQuestion::DisplayQuestion() {
+	
+}
 bool QuizQuestion::Evaluate() {
 	// This is a placeholder implementation. The actual implementation should be in derived classes.
 	cout << "Evaluating question: " << question << endl;

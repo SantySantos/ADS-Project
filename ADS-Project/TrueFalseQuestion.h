@@ -21,4 +21,6 @@ public:
 	//functions
 	bool Evaluate(bool answer);
 
+	void DisplayQuestion();
+
 };

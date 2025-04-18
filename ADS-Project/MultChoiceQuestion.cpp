@@ -1,6 +1,7 @@
 #include <iostream>
 #include "QuizQuestion.h"
 #include "MultChoiceQuestion.h"
+#include "QuizManager.h"
 
 using namespace std;
 
@@ -19,5 +20,46 @@ MultChoiceQuestion::MultChoiceQuestion(string newQuestion, string choices[4], in
 //function implementation
 
 bool MultChoiceQuestion::Evaluate(int index) {
-	return index == answerIndex;
+	if (index == answerIndex) {
+		QuizManager::playerScore += pointValue; //adding the points to the score
+		return true;	
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void MultChoiceQuestion::DisplayQuestion() {
+
+	string TempanswerIndex ;
+	cout <<  question << endl;
+
+	for (int i = 0; i < 4; i++) {
+
+		cout << i + 1 << ". " << choiceArr[i] << endl;
+	}
+
+	cout << "Please chose one of the options";
+
+	cin >> TempanswerIndex;
+	try
+	{
+		int answerIndex = std::stoi(TempanswerIndex);
+		if (answerIndex >= 1 && answerIndex <= 4 )
+		{
+			Evaluate(answerIndex - 1); // -1 because the array starts from 0
+		}
+		else
+		{
+			std::cout << "Please choose a valid option" << std::endl;
+			system("cls"); //clean the screen
+			DisplayQuestion();
+		}
+	}
+	catch (const std::exception&)
+	{
+		system("cls"); //clean the screen
+		DisplayQuestion();
+	}
 }
