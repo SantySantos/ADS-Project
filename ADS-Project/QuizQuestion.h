@@ -4,20 +4,22 @@
 #include <string>
 #include "IEvaluable.h"
 
+using namespace std;
+
 class QuizQuestion : public IEvaluable {
 
 protected:
 	//atributes
-	std::string question;
+	string question;
 
 public:
 	
 	//attributes
 	int pointValue;
 
-	std::string getQuestion();
+	string getQuestion();
 
-	std::string setQuestion(const string& tempQuestion); 
+	string setQuestion(const string& tempQuestion); 
 
 	//functions
 	int getPoints();
