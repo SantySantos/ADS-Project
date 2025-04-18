@@ -13,7 +13,7 @@ std::string QuizQuestion::getQuestion() {
 	return question;
 }
 
-std::string QuizQuestion::setQuestion(const string& tempQuestion) 
+std::string QuizQuestion::setQuestion(const std::string& tempQuestion) 
 {
 	question = tempQuestion;
 	return question;

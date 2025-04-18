@@ -84,7 +84,7 @@ Quiz QuizManager::Load() { // static
                     
                     while (file.peek() != EOF)
                     {
-                        
+
                         Chosenquiz.myQuestions.push_back(QuizQuestion(InsertingElementsToQuiz(file))); //creating a question object and adding it to the quiz
                         
                     }   
@@ -134,7 +134,7 @@ QuizQuestion QuizManager::InsertingElementsToQuiz(ifstream& file)
 
         //reading the file line by line
         std::getline(file, questionType, ','); //reading the first line of the file
-        if (questionType != "M") //checking if the question type is MULTCHOICE
+        if (questionType == "M") //checking if the question type is MULTCHOICE
         {
 
             std::getline(file, tempQuestion, ',');
@@ -146,7 +146,7 @@ QuizQuestion QuizManager::InsertingElementsToQuiz(ifstream& file)
             tempIndex = std::stoi(tempCorrectIndex); //converting the string to int
             std::getline(file, StempSCore, '\n');
             tempScore = std::stoi(StempSCore);
-
+            cout << "we caame here" << endl;
             MultChoiceQuestion tempQuizQuestion(tempQuestion, answers, tempIndex, tempScore);
 
             return tempQuizQuestion; //returning the question object

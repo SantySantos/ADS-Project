@@ -4,6 +4,8 @@
 #include <string>
 #include "IEvaluable.h"
 
+using namespace std;
+
 class QuizQuestion : public IEvaluable {
 
 protected:
@@ -17,7 +19,7 @@ public:
 
 	std::string getQuestion();
 
-	std::string setQuestion(const string& tempQuestion); 
+	std::string setQuestion(const std::string& tempQuestion); 
 
 	//functions
 	int getPoints();
