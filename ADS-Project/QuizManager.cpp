@@ -177,7 +177,7 @@ Quiz QuizManager::Load() { // static
 					while (file.peek() != EOF)
 					{
 
-               Chosenquiz.myQuestions->push_back(new QuizQuestion(InsertingElementsToQuiz(file))); //creating a question object and adding it to the quiz
+				Chosenquiz.myQuestions->push_back(new QuizQuestion(InsertingToQuiz(file))); //creating a question object and adding it to the quiz
                         
 					}
 
@@ -215,6 +215,7 @@ QuizQuestion QuizManager::InsertingToQuiz(ifstream& file)
 	try
 	{
 		//tempHolders
+		std::string discardline = "";	
 		std::string tempQuizType = "";
 		std::string tempQuestion = "";
 		std::string answers[4];
@@ -225,7 +226,7 @@ QuizQuestion QuizManager::InsertingToQuiz(ifstream& file)
 
 		getline(file, tempQuizType, ','); //reading the first line of the file
 
-		if (tempQuizType == "M") //checking if the question type is MULTCHOICE
+		if (tempQuizType == "MultChoiceQuestion") //checking if the question type is MULTCHOICE
 		{
 			std::getline(file, tempQuestion, ',');
 			std::getline(file, answers[0], ',');
@@ -239,7 +240,7 @@ QuizQuestion QuizManager::InsertingToQuiz(ifstream& file)
 			MultChoiceQuestion tempQuizQuestion(tempQuestion, answers, tempIndex, tempScore);
 			return tempQuizQuestion;
 		}
-		else if (tempQuizType == "B") //checking if the question type is true or false 
+		else if (tempQuizType == "TrueFalseQuestion") //checking if the question type is true or false 
 		{
 
 			std::getline(file, tempQuestion, ',');
@@ -252,11 +253,10 @@ QuizQuestion QuizManager::InsertingToQuiz(ifstream& file)
 		}
 		else
 		{
-			throw  "Please enter a valid question type";
-
+			std::getline(file, discardline, '\n');
+			discardline = ""; //clearing the line
+			InsertingToQuiz(file); //recursive call to load the quiz after its created
 		}
-
-
 	}
 	catch (const std::exception&)
 	{

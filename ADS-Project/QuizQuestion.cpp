@@ -24,7 +24,7 @@ std::string QuizQuestion::setQuestion(const std::string& tempQuestion)
 }
 
 void QuizQuestion::DisplayQuestion() {
-	
+	;
 }
 bool QuizQuestion::Evaluate() {
 	// This is a placeholder implementation. The actual implementation should be in derived classes.

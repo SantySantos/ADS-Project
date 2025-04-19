@@ -31,6 +31,7 @@ bool TrueFalseQuestion::Evaluate(bool answer) {
 
 void TrueFalseQuestion::DisplayQuestion() {
 	
+	cout << "True or False Question" << endl;
 	std::string TempanswerIndex;
 	std::cout << question << std::endl;
 	for (int i = 0; i < 2; i++) {
