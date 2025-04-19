@@ -105,13 +105,6 @@ Quiz QuizManager::Create() {
     for (QuizQuestion* q : *(quiz.myQuestions)) {
         if (typeid(*q) == typeid(MultChoiceQuestion)) {
             MultChoiceQuestion* mcq = dynamic_cast<MultChoiceQuestion*>(q);
-            std::cout << "Exporting question: " << mcq->getQuestion() << "\n";
-            for (int i = 0; i < 4; i++) {
-                std::cout << "Choice " << i << ": [" << mcq->choiceArr[i] << "]\n";
-            }
-            std::cout << "Answer index: " << mcq->answerIndex << "\n";
-            std::cout << "Points: " << mcq->getPoints() << "\n";
-            cout << mcq->choiceArr[3] << endl;
             file << "Multiple Choice, ";
             file << mcq->getQuestion() + ",";
             for (int i = 0; i < 4; i++) {
