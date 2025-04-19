@@ -22,31 +22,30 @@ MultChoiceQuestion::MultChoiceQuestion(string newQuestion, string choices[4], in
 
 bool MultChoiceQuestion::Evaluate(int index) {
 	if (index == answerIndex) {
+		cout << "Correct answer!" << endl;
 		QuizManager::playerScore += pointValue; //adding the points to the score
+		cout <<  "current score: " << QuizManager::playerScore << endl;
 		return true;	
 	}
 	else
 	{
+		cout << "Wrong answer!" << endl;
 		return false;
 	}
 }
 
 void MultChoiceQuestion::DisplayQuestion() {
 
-	cout << "Multiple Choice Question" << endl;
-}
-
-void MultChoiceQuestion::DisplayStuff() {
-	
-	DisplayQuestion();
-
 	string TempanswerIndex;
 
-	cout <<  question << endl;
+	cout << "Multiple Choice Question" << endl;
+
+
+	cout << question << endl;
 
 	for (int i = 0; i < 4; i++) {
 
-		cout << (i+1) << ". " << choiceArr[i] << endl;
+		cout << (i + 1) << ". " << choiceArr[i] << endl;
 	}
 
 	cout << "Please chose one of the options" << endl;
@@ -56,7 +55,7 @@ void MultChoiceQuestion::DisplayStuff() {
 	try
 	{
 		int answerIndex = std::stoi(TempanswerIndex);
-		if (answerIndex >= 1 && answerIndex <= 4 )
+		if (answerIndex >= 1 && answerIndex <= 4)
 		{
 			Evaluate(answerIndex - 1); // -1 because the array starts from 0
 		}

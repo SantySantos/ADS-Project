@@ -11,6 +11,10 @@
 namespace fs = std::filesystem;
 
 class QuizManager {
+
+private:
+	static std::string Username;
+
 public:
 	//constructor
 	QuizManager();
@@ -18,6 +22,11 @@ public:
 	static int playerScore;  //static variable to keep the score of the player
 
 	static Quiz quizToPlay;
+
+	//getter and setter
+	static std::string GetUsername();
+
+	static std::string SetUsername(string value);
 
 	//attributes
 	fs::path FilesFolder = fs::current_path();
@@ -34,6 +43,7 @@ public:
 
 	QuizQuestion* InsertingToQuiz(std::ifstream& file);
 
+	
 
 	vector<std::string> GetQuizFilesNames(); // Fixed: Use std::vector and std::string  
 

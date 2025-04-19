@@ -19,7 +19,6 @@ public:
 	//functions
 	bool Evaluate(int index);
 
-	void DisplayQuestion();
+	void DisplayQuestion() override;
 
-	void DisplayStuff() override;
 };

@@ -20,7 +20,7 @@ bool Quiz::Evaluate() {
 
 		if (q != nullptr)
 		{
-			q->DisplayStuff(); //displaying the question
+			q->DisplayQuestion(); //displaying the question
 		}
 		else
 		{
