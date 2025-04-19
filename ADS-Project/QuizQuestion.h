@@ -28,4 +28,6 @@ public:
 
 	bool Evaluate() override;
 
+	virtual void DisplayStuff() = 0;
+
 };
