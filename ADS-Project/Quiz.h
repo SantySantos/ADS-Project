@@ -15,7 +15,8 @@ public:
 	Quiz();
 
 	//atributes
-	list<QuizQuestion> myQuestions;
+	list<QuizQuestion*>* myQuestions = new list<QuizQuestion*>;
+
 
 	std::string quizName;
 

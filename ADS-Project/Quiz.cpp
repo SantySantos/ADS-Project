@@ -17,8 +17,7 @@ bool Quiz::Evaluate() {
 	int score = 0;
 
 	for (QuizQuestion q : myQuestions) 
-	{		
-		
+	{			
 		q.DisplayQuestion(); //displaying the question
 	}
 
