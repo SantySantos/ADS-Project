@@ -32,7 +32,7 @@ public:
 
 	void OptionChosen(int option);
 
-	QuizQuestion InsertingToQuiz(std::ifstream& file);
+	QuizQuestion* InsertingToQuiz(std::ifstream& file);
 
 
 	vector<std::string> GetQuizFilesNames(); // Fixed: Use std::vector and std::string  

@@ -25,4 +25,5 @@ public:
 
 	void DisplayQuestion();
 
+	void DisplayStuff() override;
 };

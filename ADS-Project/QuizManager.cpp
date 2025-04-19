@@ -8,12 +8,13 @@
 #include <list>
 #include "Quiz.h"
 
-using namespace std;
+
 namespace fs = std::filesystem;
 
 int QuizManager::playerScore = 0;
 Quiz QuizManager::quizToPlay;
 
+using namespace std;
 //constructor implementation
 QuizManager::QuizManager() : FilesFolder(fs::current_path()), directoryQuestions(FilesFolder / "Quizes") {
 
@@ -170,17 +171,21 @@ Quiz QuizManager::Load() { // static
 					std::string chosenFile = quizFileNames[userOption - 1]; //getting the quiz chosen name from the vector.
 
 					std::ifstream file(directoryQuestions / chosenFile); //opening the file
-
+					std::string discardline = ""; //variable to discard the first line of the file
 					Chosenquiz.quizName = chosenFile; //setting the quiz name
 
+					std::getline(file, discardline, '\n');
+					cout << "discated line = " << discardline << endl;
 
 					while (file.peek() != EOF)
 					{
 
-				Chosenquiz.myQuestions->push_back(new QuizQuestion(InsertingToQuiz(file))); //creating a question object and adding it to the quiz
+						Chosenquiz.myQuestions->push_back(InsertingToQuiz(file)); //creating a question object and adding it to the quiz
                         
 					}
-
+					for (QuizQuestion* q : *(Chosenquiz.myQuestions)) {
+						cout << "Address in list: " << q << endl;
+					}
 					file.close(); //closing the file
 
 					return Chosenquiz; //returning the quiz object
@@ -210,12 +215,11 @@ Quiz QuizManager::Load() { // static
 	return Chosenquiz;
 }
 
-QuizQuestion QuizManager::InsertingToQuiz(ifstream& file)
+QuizQuestion* QuizManager::InsertingToQuiz(ifstream& file)
 {
 	try
 	{
 		//tempHolders
-		std::string discardline = "";	
 		std::string tempQuizType = "";
 		std::string tempQuestion = "";
 		std::string answers[4];
@@ -237,7 +241,12 @@ QuizQuestion QuizManager::InsertingToQuiz(ifstream& file)
 			tempIndex = std::stoi(tempCorrectIndex); //converting the string to int
 			std::getline(file, StempScore, '\n');
 			tempScore = std::stoi(StempScore);
-			MultChoiceQuestion tempQuizQuestion(tempQuestion, answers, tempIndex, tempScore);
+			MultChoiceQuestion *tempQuizQuestion =  new MultChoiceQuestion(tempQuestion, answers, tempIndex, tempScore);	
+			for (int i = 0; i < 4; i++)
+			{
+				tempQuizQuestion->choiceArr[i] = answers[i]; //setting the answers in the array
+				cout << tempQuizQuestion->choiceArr[i] << endl;
+			}
 			return tempQuizQuestion;
 		}
 		else if (tempQuizType == "TrueFalseQuestion") //checking if the question type is true or false 
@@ -248,15 +257,12 @@ QuizQuestion QuizManager::InsertingToQuiz(ifstream& file)
 			tempIndex = std::stoi(tempCorrectIndex); //converting the string to int
 			std::getline(file, StempScore, '\n');
 			tempScore = std::stoi(StempScore);
-			TrueFalseQuestion tempQuizQuestion(tempQuestion, tempIndex, tempScore);
+			TrueFalseQuestion *tempQuizQuestion = new TrueFalseQuestion(tempQuestion, tempIndex, tempScore);
 			return tempQuizQuestion; //returning the question object
 		}
-		else
-		{
-			std::getline(file, discardline, '\n');
-			discardline = ""; //clearing the line
-			InsertingToQuiz(file); //recursive call to load the quiz after its created
-		}
+		
+			
+		
 	}
 	catch (const std::exception&)
 	{

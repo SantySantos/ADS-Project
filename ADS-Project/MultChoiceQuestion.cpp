@@ -2,6 +2,7 @@
 #include "QuizQuestion.h"
 #include "MultChoiceQuestion.h"
 #include "QuizManager.h"
+#include <string>
 
 using namespace std;
 
@@ -31,19 +32,27 @@ bool MultChoiceQuestion::Evaluate(int index) {
 }
 
 void MultChoiceQuestion::DisplayQuestion() {
-	
+
 	cout << "Multiple Choice Question" << endl;
-	string TempanswerIndex ;
+}
+
+void MultChoiceQuestion::DisplayStuff() {
+	
+	DisplayQuestion();
+
+	string TempanswerIndex;
+
 	cout <<  question << endl;
 
 	for (int i = 0; i < 4; i++) {
 
-		cout << i + 1 << ". " << choiceArr[i] << endl;
+		cout << (i+1) << ". " << choiceArr[i] << endl;
 	}
 
-	cout << "Please chose one of the options";
+	cout << "Please chose one of the options" << endl;
 
 	cin >> TempanswerIndex;
+
 	try
 	{
 		int answerIndex = std::stoi(TempanswerIndex);
@@ -54,8 +63,7 @@ void MultChoiceQuestion::DisplayQuestion() {
 		else
 		{
 			std::cout << "Please choose a valid option" << std::endl;
-			system("cls"); //clean the screen
-			DisplayQuestion();
+			system("cls"); //clean the screen			
 		}
 	}
 	catch (const std::exception&)

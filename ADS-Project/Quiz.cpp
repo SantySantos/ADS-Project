@@ -14,20 +14,20 @@ Quiz::Quiz() {
 //function implementation
 bool Quiz::Evaluate() {
 
-
 	//checking if the list is empty
-	if (myQuestions->front() != nullptr) {
-		
-		for (QuizQuestion* q : *myQuestions) {
 
-			q->DisplayQuestion(); //displaying the question					
+	for (QuizQuestion* q : *myQuestions) {
+
+		if (q != nullptr)
+		{
+			q->DisplayStuff(); //displaying the question
+		}
+		else
+		{
+			cout << "The quiz is empty" << endl;
+			return false;
 		}
 	}
-	else {
-		cout << "The quiz is empty" << endl;
-		return false;
 
-	}
-	
 	return true;
 }

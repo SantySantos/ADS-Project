@@ -20,4 +20,6 @@ public:
 	bool Evaluate(int index);
 
 	void DisplayQuestion();
+
+	void DisplayStuff() override;
 };
