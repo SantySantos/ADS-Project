@@ -13,6 +13,7 @@ namespace fs = std::filesystem;
 
 int QuizManager::playerScore = 0;
 Quiz QuizManager::quizToPlay;
+std::string QuizManager::Username = ""; 
 
 using namespace std;
 //constructor implementation
@@ -20,6 +21,27 @@ QuizManager::QuizManager() : FilesFolder(fs::current_path()), directoryQuestions
 
 
 	DisplayOptions();
+}
+
+//getter and setter implementation
+std::string QuizManager::GetUsername() {
+	return Username;
+}
+std::string QuizManager::SetUsername(string value) {
+
+	cout << "please enter your username for the leaderboard" << endl;
+
+	std::getline(cin, value); //getting the username from the user
+
+	if (value.empty()) //checking if the username is empty
+	{
+		cout << "Please enter a valid username" << endl;
+		SetUsername(value); //recursive call to set the username
+	}
+	else
+	{
+		Username = value; //setting the username
+	}
 }
 
 //functions implementations
@@ -280,6 +302,8 @@ void QuizManager::OptionChosen(int currentOption) {
 		QuizManager::quizToPlay = Load();
 		system("cls"); //clean the screen
 		quizToPlay.Evaluate();
+		cout << "Final Score: " << QuizManager::playerScore; //resetting the score
+		
 		break;
 	case 2:
 		Create();
@@ -303,7 +327,7 @@ void QuizManager::DisplayOptions()
 {
 	int currentOption = 0;
 
-	cout << "WELCOME TO (INSERT APP NAME HERE) \n";
+	cout << "WELCOME TO YOUR QUIZ LOBBY \n";
 
 	cout << "Please choose an option from the following ones and press enter\n"
 		"1. Answer a quiz \n"

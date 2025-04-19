@@ -23,7 +23,5 @@ public:
 	//functions
 	bool Evaluate(bool answer);
 
-	void DisplayQuestion();
-
-	void DisplayStuff() override;
+	void DisplayQuestion() override;
 };
