@@ -68,7 +68,7 @@ Quiz QuizManager::Create() {
     Quiz quiz;
     cout << "How many questions would you like to add?" << endl;
     cin >> questionNum;
-    cout << questionNum << endl;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     for (int i = 0; i < questionNum; i++) {
         int type;
         string question;
@@ -99,9 +99,10 @@ Quiz QuizManager::Create() {
             cout << "Which choice is the correct one?" << endl;
             cin >> answerIndex;
             answerIndex--;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "How many points is this question worth?" << endl;
             cin >> points;
-            quiz.myQuestions->push_back(new MultChoiceQuestion(question, choices, answerIndex, points));
+            quiz.myQuestions->push_back(new MultChoiceQuestion(question, choices[0],choices[1],choices[2],choices[3], answerIndex, points));
 
         }
         else if(type == 2) {
@@ -134,20 +135,24 @@ Quiz QuizManager::Create() {
         if (typeid(*q) == typeid(MultChoiceQuestion)) {
             MultChoiceQuestion* mcq = dynamic_cast<MultChoiceQuestion*>(q);
             file << "Multiple Choice, ";
-            file << mcq->getQuestion() + ", ";
+            file << mcq->getQuestion() + ",";
             for (int i = 0; i < 4; i++) {
-                file << mcq->choiceArr[i] + ", ";
+                file << mcq->choiceArr[i];
+                if (i != 3) {
+                    file << ",";
+                }
             }
-            file << mcq->answerIndex + ", ";
+            file << ",";
+            file << to_string(mcq->answerIndex) + ",";
             file << mcq->getPoints();
         }
 
         else if (typeid(*q) == typeid(TrueFalseQuestion)) {
             TrueFalseQuestion* tfq = dynamic_cast<TrueFalseQuestion*>(q);
             file << "True or False, ";
-            file << tfq->getQuestion() + ", ";
-            file << ",,,, ";
-            file << (tfq->getAnswer() ? "True" : "False") << ", ";
+            file << tfq->getQuestion() + ",";
+            file << ",,,,";
+            file << (tfq->getAnswer() ? "True" : "False") << ",";
             file << tfq->getPoints();
         }
         file << "\n";
