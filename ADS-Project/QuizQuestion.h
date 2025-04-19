@@ -17,7 +17,9 @@ public:
 	//attributes
 	int pointValue;
 
-	string getQuestion();
+	 string getQuestion();
+
+	void DisplayQuestion();
 
 	std::string setQuestion(const std::string& tempQuestion); 
 
