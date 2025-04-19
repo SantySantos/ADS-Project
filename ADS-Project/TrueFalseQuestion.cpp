@@ -3,6 +3,11 @@
 #include "TrueFalseQuestion.h"
 #include <string>
 
+bool TrueFalseQuestion::getAnswer()
+{
+	return correctAnswer;
+}
+
 //constructor implementation
 TrueFalseQuestion::TrueFalseQuestion(string newQuestion, bool answer, int points) {
 	QuizQuestion::question = newQuestion;

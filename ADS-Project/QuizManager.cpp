@@ -5,6 +5,7 @@
 #include "MultChoiceQuestion.h"
 #include "TrueFalseQuestion.h"
 #include <fstream>
+#include <list>
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -32,25 +33,92 @@ vector<string> QuizManager::GetQuizFilesNames() {
 Quiz QuizManager::Create() {
     int questionNum;
     Quiz quiz;
-	cout << "CREATE MUST BE IMPLEMENTED" << endl;
     cout << "How many questions would you like to add?" << endl;
     cin >> questionNum;
-    for (int i = 0; i < questionNum;) {
+    cout << questionNum << endl;
+    for (int i = 0; i < questionNum; i++) {
+        int type;
         string question;
         string choices[4];
         int answerIndex;
         int points;
-        cout << "Type question " << i << ": " << endl;
-        getline(cin, question);
-        for (int j = 0; j < 4; j++) {
-            cout << "Type choice " << j << ": " << endl;
+        while (true) {
+            cout << "What type of question will it be? \n 1. Multiple Choice \n 2. True or False" << endl;
+            cin >> type;
+            if (cin.fail() || type != 1 && type != 2) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Please choose a valid number." << endl;
+            }
+            else {
+                break;
+            }
         }
-        cout << "Which choice is the correct one?" << endl;
-        cin >> answerIndex;
-        cout << "How many points is this question worth?";
-        cin >> points;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Enter the question " << i + 1 << ": " << endl;
+        getline(cin, question);
+        if (type == 1) {
+            for (int j = 0; j < 4; j++) {
+                cout << "Type choice " << j + 1 << ": " << endl;
+                getline(cin,choices[j]);
+            }
+            cout << "Which choice is the correct one?" << endl;
+            cin >> answerIndex;
+            answerIndex--;
+            cout << "How many points is this question worth?" << endl;
+            cin >> points;
+            quiz.myQuestions->push_back(new MultChoiceQuestion(question, choices, answerIndex, points));
+        }
+        else if(type == 2) {
+            bool answer;
+            cout << "Is this answer \n 1. True \n 2. False" << endl;
+            cin >> answerIndex;
+            if (answerIndex == 1) {
+                answer = true;
+            }
+            else if (answerIndex == 2) {
+                answer = false;
+            }
+            cout << "How many points is this question worth?" << endl;
+            cin >> points;
+            quiz.myQuestions->push_back(new TrueFalseQuestion(question, answer, points));
+        }
+        else {
+            cout << "Invalid input." << endl;
+        }
     }
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    string filename;
+    cout << "What is the name of this file?" << endl;
+    getline(cin, filename);
+    ofstream file("Quizes/" + filename + ".csv");
+    file << "Type,Question,Option1,Option2,Option3,Option4,Answer,Points\n";
+    int qSize = quiz.myQuestions->size();
+    for (QuizQuestion* q : *(quiz.myQuestions)) {
+        if (typeid(*q) == typeid(MultChoiceQuestion)) {
+            MultChoiceQuestion* mcq = dynamic_cast<MultChoiceQuestion*>(q);
+            file << "Multiple Choice, ";
+            file << mcq->getQuestion() + ", ";
+            for (int i = 0; i < 4; i++) {
+                file << mcq->choiceArr[i] + ", ";
+            }
+            file << mcq->answerIndex + ", ";
+            file << mcq->getPoints();
+        }
 
+        else if (typeid(*q) == typeid(TrueFalseQuestion)) {
+            TrueFalseQuestion* tfq = dynamic_cast<TrueFalseQuestion*>(q);
+            file << "True or False, ";
+            file << tfq->getQuestion() + ", ";
+            file << ",,,, ";
+            file << (tfq->getAnswer() ? "True" : "False") << ", ";
+            file << tfq->getPoints();
+        }
+        file << "\n";
+    }
+    file.close();
 	return quiz;
 }
 
@@ -105,7 +173,7 @@ Quiz QuizManager::Load() { // static
                     while (file.peek() != EOF)
                     {
 
-                        Chosenquiz.myQuestions.push_back(QuizQuestion(InsertingElementsToQuiz(file))); //creating a question object and adding it to the quiz
+                        Chosenquiz.myQuestions->push_back(new QuizQuestion(InsertingElementsToQuiz(file))); //creating a question object and adding it to the quiz
                         
                     }   
 

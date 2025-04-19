@@ -15,15 +15,15 @@ bool Quiz::Evaluate() {
 	int score = 0;
 
 	//could change to template type for MultChoiceQuestion and TrueFalseQuestion
-	for (QuizQuestion q : myQuestions) {
-		if (q.Evaluate()) {
+	for (QuizQuestion* q : *(myQuestions)) {
+		if (q->Evaluate()) {
 			score++;
 		}
 		else {
 			score--;
 		}
 	}
-	if (score < myQuestions.size() / 2) {
+	if (score < myQuestions->size() / 2) {
 		return false;
 	}
 	return true;
