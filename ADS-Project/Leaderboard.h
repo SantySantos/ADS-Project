@@ -3,6 +3,10 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <fstream>
+#include <sstream>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -10,15 +14,14 @@ class Leaderboard {
 
 public:
 
-	std::map<int, std::map<std::string ,int >> board;
+	map<int, map<string, int>> leaderboard;
 
+	void Load(string& filename);
 
-	//To be implemented
-	/*
-	void Load();
+	void Save(string& filename);
 
-	void Save();
-	*/
-	
+	void UpdateScore(int quizID, const string& username, int score);
 
+private:
+	const int BOARD_MAX = 5;
 };
