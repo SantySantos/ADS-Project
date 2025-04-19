@@ -13,13 +13,21 @@ Quiz::Quiz() {
 
 //function implementation
 bool Quiz::Evaluate() {
-	//attributes
-	int score = 0;
 
-	for (QuizQuestion q : myQuestions) 
-	{			
-		q.DisplayQuestion(); //displaying the question
+
+	//checking if the list is empty
+	if (myQuestions->front() != nullptr) {
+		
+		for (QuizQuestion* q : *myQuestions) {
+
+			q->DisplayQuestion(); //displaying the question					
+		}
 	}
+	else {
+		cout << "The quiz is empty" << endl;
+		return false;
 
+	}
+	
 	return true;
 }

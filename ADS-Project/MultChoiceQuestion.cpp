@@ -31,7 +31,8 @@ bool MultChoiceQuestion::Evaluate(int index) {
 }
 
 void MultChoiceQuestion::DisplayQuestion() {
-
+	
+	cout << "Multiple Choice Question" << endl;
 	string TempanswerIndex ;
 	cout <<  question << endl;
 

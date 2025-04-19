@@ -27,4 +27,5 @@ public:
 	int getPoints();
 
 	bool Evaluate() override;
+
 };
