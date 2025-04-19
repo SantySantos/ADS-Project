@@ -1,5 +1,7 @@
 #include "Quiz.h"
 #include <iostream>
+#include "MultChoiceQuestion.h"
+#include "TrueFalseQuestion.h"
 
 using namespace std;
 
@@ -14,17 +16,10 @@ bool Quiz::Evaluate() {
 	//attributes
 	int score = 0;
 
-	//could change to template type for MultChoiceQuestion and TrueFalseQuestion
-	for (QuizQuestion* q : *(myQuestions)) {
-		if (q->Evaluate()) {
-			score++;
-		}
-		else {
-			score--;
-		}
+	for (QuizQuestion q : myQuestions) 
+	{			
+		q.DisplayQuestion(); //displaying the question
 	}
-	if (score < myQuestions->size() / 2) {
-		return false;
-	}
+
 	return true;
 }

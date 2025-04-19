@@ -19,4 +19,5 @@ public:
 	//functions
 	bool Evaluate(int index);
 
+	void DisplayQuestion();
 };
