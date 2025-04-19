@@ -26,7 +26,7 @@ public:
 	//getter and setter
 	static std::string GetUsername();
 
-	static std::string SetUsername(string value);
+	static void SetUsername();
 
 	//attributes
 	fs::path FilesFolder = fs::current_path();

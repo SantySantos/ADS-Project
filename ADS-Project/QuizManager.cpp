@@ -27,16 +27,21 @@ QuizManager::QuizManager() : FilesFolder(fs::current_path()), directoryQuestions
 std::string QuizManager::GetUsername() {
 	return Username;
 }
-std::string QuizManager::SetUsername(string value) {
+void QuizManager::SetUsername() {
 
-	cout << "please enter your username for the leaderboard" << endl;
+	cin.clear();
+	cin.ignore();
+	
+	std::string value; //variable to store the username
+
+	cout << "\n" << "please enter your username for the leaderboard" << endl;
 
 	std::getline(cin, value); //getting the username from the user
 
 	if (value.empty()) //checking if the username is empty
 	{
 		cout << "Please enter a valid username" << endl;
-		SetUsername(value); //recursive call to set the username
+		SetUsername(); //recursive call to set the username
 	}
 	else
 	{
@@ -97,6 +102,7 @@ Quiz QuizManager::Create() {
             cout << "How many points is this question worth?" << endl;
             cin >> points;
             quiz.myQuestions->push_back(new MultChoiceQuestion(question, choices, answerIndex, points));
+
         }
         else if(type == 2) {
             bool answer;
@@ -303,7 +309,7 @@ void QuizManager::OptionChosen(int currentOption) {
 		system("cls"); //clean the screen
 		quizToPlay.Evaluate();
 		cout << "Final Score: " << QuizManager::playerScore; //resetting the score
-		
+		QuizManager::SetUsername(); //setting the username
 		break;
 	case 2:
 		Create();
