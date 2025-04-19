@@ -20,17 +20,21 @@ bool TrueFalseQuestion::Evaluate(bool answer) {
 
 	if (answer == correctAnswer)
 	{
+		cout << "Correct answer!" << endl;
 		QuizManager::playerScore += pointValue; //adding the points to the score
+		cout << "current score: " << QuizManager::playerScore << endl;
 		return true;
 	}
 	else
 	{
+		cout << "Wrong answer!" << endl;
 		return false;
 	}
 }
 
 void TrueFalseQuestion::DisplayQuestion() {
 	
+	cout << "True or False Question" << endl;
 	std::string TempanswerIndex;
 	std::cout << question << std::endl;
 	for (int i = 0; i < 2; i++) {

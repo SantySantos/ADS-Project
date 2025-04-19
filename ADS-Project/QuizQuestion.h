@@ -19,7 +19,7 @@ public:
 
 	 string getQuestion();
 
-	void DisplayQuestion();
+	virtual void DisplayQuestion() = 0;
 
 	std::string setQuestion(const std::string& tempQuestion); 
 
@@ -27,4 +27,5 @@ public:
 	int getPoints();
 
 	bool Evaluate() override;
+
 };
