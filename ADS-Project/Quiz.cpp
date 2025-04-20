@@ -2,6 +2,7 @@
 #include <iostream>
 #include "MultChoiceQuestion.h"
 #include "TrueFalseQuestion.h"
+#include "QuizManager.h"
 
 using namespace std;
 
@@ -18,6 +19,8 @@ bool Quiz::Evaluate() {
 
 	for (QuizQuestion* q : *myQuestions) {
 
+		system("cls"); //clean the screen
+		cout << "Current Score: " << QuizManager::playerScore << endl; //displaying the current score
 		if (q != nullptr)
 		{
 			q->DisplayQuestion(); //displaying the question
