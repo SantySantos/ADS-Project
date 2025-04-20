@@ -253,6 +253,7 @@ QuizQuestion* QuizManager::InsertingToQuiz(ifstream& file)
 	try
 	{
 		//tempHolders
+		std::string tempLine = ""; //variable to store the line
 		std::string tempQuizType = "";
 		std::string tempQuestion = "";
 		std::string answers[4];
@@ -263,7 +264,7 @@ QuizQuestion* QuizManager::InsertingToQuiz(ifstream& file)
 
 		getline(file, tempQuizType, ','); //reading the first line of the file
 
-		if (tempQuizType == "MultChoiceQuestion") //checking if the question type is MULTCHOICE
+		if (tempQuizType == "Multiple Choice") //checking if the question type is MULTCHOICE
 		{
 			std::getline(file, tempQuestion, ',');
 			std::getline(file, answers[0], ',');
@@ -282,11 +283,22 @@ QuizQuestion* QuizManager::InsertingToQuiz(ifstream& file)
 			}
 			return tempQuizQuestion;
 		}
-		else if (tempQuizType == "TrueFalseQuestion") //checking if the question type is true or false 
+		else if (tempQuizType == "True or False") //checking if the question type is true or false 
 		{
 
 			std::getline(file, tempQuestion, ',');
+			for (int i = 0; i < 4; i++) {
+				std::getline(file, tempLine, ','); //ignoring the next 4 lines
+			}
 			std::getline(file, tempCorrectIndex, ',');
+			if (tempCorrectIndex == "True") //checking if the answer is true
+			{
+				tempCorrectIndex = "1"; //setting the correct index to 1
+			}
+			else if (tempCorrectIndex == "False") //checking if the answer is false
+			{
+				tempCorrectIndex = "0"; //setting the correct index to 0
+			}
 			tempIndex = std::stoi(tempCorrectIndex); //converting the string to int
 			std::getline(file, StempScore, '\n');
 			tempScore = std::stoi(StempScore);
