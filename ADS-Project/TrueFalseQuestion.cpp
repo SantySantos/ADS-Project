@@ -23,11 +23,35 @@ bool TrueFalseQuestion::Evaluate(bool answer) {
 		cout << "Correct answer!" << endl;
 		QuizManager::playerScore += pointValue; //adding the points to the score
 		cout << "current score: " << QuizManager::playerScore << endl;
+
+		cout << endl;
+		cout << "Please press a key to contine" << endl;
+		cin.clear();
+		cin.ignore(4096, '\n');
+		cin.get(); //wait for the user to press any key
+
 		return true;
 	}
 	else
 	{
 		cout << "Wrong answer!" << endl;
+
+		cout << "The correct answer is: ";
+		if (correctAnswer)
+		{
+			cout << "True" << endl;
+		}
+		else
+		{
+			cout << "False" << endl;
+		}
+		cout << endl;
+
+		cout << "Please press a key to contine" << endl;
+		cin.clear();
+		cin.ignore(4096, '\n');
+		cin.get(); //wait for the user to press any key
+
 		return false;
 	}
 }

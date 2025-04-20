@@ -187,15 +187,17 @@ Quiz QuizManager::Load() { // static
 		cout << endl;
 
 		cout << "Please choose one of the options:" << endl;
-
-		cin.ignore();
-		std::getline(cin, userInput); // Corrected the order of arguments for getline
-
 		//getting user input until it does not fail anymore and inserts a valid value
 		while (true)
 		{
 			try
 			{
+				cin.clear(); //clear the input buffer
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+				cout << "here" << endl;				
+				std::getline(cin, userInput); // Corrected the order of arguments for getline
+
 				userOption = std::stoi(userInput); //converting the string to int
 
 				if (userOption > 0 && userOption <= quizFileNames.size())
@@ -209,6 +211,8 @@ Quiz QuizManager::Load() { // static
 
 					std::getline(file, discardline, '\n');
 					cout << "discated line = " << discardline << endl;
+
+
 
 					while (file.peek() != EOF)
 					{
@@ -234,19 +238,15 @@ Quiz QuizManager::Load() { // static
 
 				}
 				else {
-					cout << "Please choose a valid option" << endl;
+					cout << "Please enter a valid option" << endl;
+					continue;
 				}
 			}
 			catch (std::exception)
 			{
-				cout << "Please enter a number" << endl;
-				cin.clear();
-				cin.ignore(4096, '\n'); //we ignore the following 4096 characters in the line as that is the max amount there can be in any compiler
+				cout << "Please enter a valid option" << endl;
 				continue; //continue the loop
 			}
-
-			cin.ignore();
-			std::getline(cin, userInput);
 		}
 	}
 	else {
@@ -352,14 +352,14 @@ void QuizManager::Information() {
 void QuizManager::OptionChosen(int currentOption) {
 
 	cin >> currentOption;
-
+	system("cls"); //clean the screen
 	switch (currentOption)
 	{
 	case 1:
 		QuizManager::quizToPlay = Load();
-		system("cls"); //clean the screen
+	
 		quizToPlay.Evaluate();
-		cout << "Final Score: " << QuizManager::playerScore; //resetting the score
+		cout << "Final Score: " << QuizManager::playerScore << endl; //resetting the score
 		QuizManager::SetUsername(); //setting the username
 		break;
 	case 2:
@@ -375,7 +375,7 @@ void QuizManager::OptionChosen(int currentOption) {
 		cin.ignore(4096, '\n');
 		//we ignore the following 4096 characters in the line as that is the max amount there can be in any compiler
 		cout << "Please choose a valid option\n";
-		OptionChosen(currentOption);
+		DisplayOptions(); //display the options again
 		break;
 	}
 }

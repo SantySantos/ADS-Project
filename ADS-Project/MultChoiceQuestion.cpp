@@ -38,11 +38,21 @@ bool MultChoiceQuestion::Evaluate(int index) {
 		cout << "Correct answer!" << endl;
 		QuizManager::playerScore += pointValue; //adding the points to the score
 		cout <<  "current score: " << QuizManager::playerScore << endl;
+		cout << endl;
+		cout << "Please press a key to contine" << endl;
+		cin.clear();
+		cin.ignore(4096, '\n'); 
+		cin.get(); //wait for the user to press any key
 		return true;	
 	}
 	else
 	{
 		cout << "Wrong answer!" << endl;
+		cout << "The correct answer is: " << choiceArr[answerIndex] << endl;
+		cout << "Please press a key to contine" << endl;
+		cin.clear();
+		cin.ignore(4096, '\n');
+		cin.get(); //wait for the user to press any key
 		return false;
 	}
 }
@@ -74,8 +84,8 @@ void MultChoiceQuestion::DisplayQuestion() {
 		}
 		else
 		{
-			std::cout << "Please choose a valid option" << std::endl;
 			system("cls"); //clean the screen			
+			DisplayQuestion();
 		}
 	}
 	catch (const std::exception&)
