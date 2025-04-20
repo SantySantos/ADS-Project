@@ -39,20 +39,20 @@ bool MultChoiceQuestion::Evaluate(int index) {
 		QuizManager::playerScore += pointValue; //adding the points to the score
 		cout <<  "current score: " << QuizManager::playerScore << endl;
 		cout << endl;
-		cout << "Please press a key to contine" << endl;
+		cout << "Please press enter to contine" << endl;
 		cin.clear();
-		cin.ignore(4096, '\n'); 
-		cin.get(); //wait for the user to press any key
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		cin.get();
 		return true;	
 	}
 	else
 	{
 		cout << "Wrong answer!" << endl;
 		cout << "The correct answer is: " << choiceArr[answerIndex] << endl;
-		cout << "Please press a key to contine" << endl;
+		cout << "Please press enter to contine" << endl;
 		cin.clear();
-		cin.ignore(4096, '\n');
-		cin.get(); //wait for the user to press any key
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		cin.get();
 		return false;
 	}
 }
