@@ -1,0 +1,11 @@
+Type,Question,Option1,Option2,Option3,Option4,Answer,Points
+Multiple Choice,Which keyword is used to define a constant in C++?,const,var,define,static,0,300
+True or False,The 'main' function is the entry point of every C++ program.,,,,,True,300
+Multiple Choice,Which operator is used to access members of a class?,::,->,.,&,2,300
+True or False,C++ supports object-oriented programming.,,,,,True,300
+Multiple Choice,What is the correct way to include a library?,#include,import,load,require,0,300
+Multiple Choice,What will 'int x = 5 / 2;' result in?,2,2.5,3,Error,2,300
+True or False,The 'cout' object is used for input.,,,,,False,300
+Multiple Choice,Which header is required for 'cout'?,iostream,string,math,stdlib,0,300
+Multiple Choice,Which symbol is used to write comments in C++?,//,#,/*,<--,0,300
+True or False,A class can contain both variables and functions.,,,,,True,300
