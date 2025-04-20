@@ -102,8 +102,8 @@ Quiz QuizManager::Create() {
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "How many points is this question worth?" << endl;
             cin >> points;
-            quiz.myQuestions->push_back(new MultChoiceQuestion(question, choices[0],choices[1],choices[2],choices[3], answerIndex, points));
-
+			quiz.myQuestions->push_back(new MultChoiceQuestion(question, choices[0], choices[1], choices[2], choices[3], answerIndex, points));
+            
         }
         else if(type == 2) {
             bool answer;
@@ -275,12 +275,15 @@ QuizQuestion* QuizManager::InsertingToQuiz(ifstream& file)
 			tempIndex = std::stoi(tempCorrectIndex); //converting the string to int
 			std::getline(file, StempScore, '\n');
 			tempScore = std::stoi(StempScore);
-			MultChoiceQuestion *tempQuizQuestion =  new MultChoiceQuestion(tempQuestion, answers, tempIndex, tempScore);	
+			MultChoiceQuestion *tempQuizQuestion =  new MultChoiceQuestion(tempQuestion, answers[0],answers[1], answers[2], answers[3], tempIndex, tempScore);
+			/*
 			for (int i = 0; i < 4; i++)
 			{
 				tempQuizQuestion->choiceArr[i] = answers[i]; //setting the answers in the array
 				cout << tempQuizQuestion->choiceArr[i] << endl;
 			}
+			*/
+			
 			return tempQuizQuestion;
 		}
 		else if (tempQuizType == "True or False") //checking if the question type is true or false 
