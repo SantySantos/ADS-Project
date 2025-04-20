@@ -147,7 +147,16 @@ Quiz QuizManager::Create() {
             file << "Multiple Choice, ";
             file << mcq->getQuestion() + ",";
             for (int i = 0; i < 4; i++) {
-                file << mcq->choiceArr[i];
+				string choice = mcq->choiceArr[i];
+				size_t pos = 0;
+				while ((pos = choice.find("\"", pos)) != string::npos) {
+					choice.replace(pos, 1, "\"\"");
+					pos += 2;
+				}
+				if (choice.find(',') != string::npos || choice.find('"') != string::npos) {
+					choice = "\"" + choice + "\"";
+				}
+				file << choice;
                 if (i != 3) {
                     file << ",";
                 }
