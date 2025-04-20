@@ -24,8 +24,7 @@ bool Quiz::Evaluate() {
 		}
 		else
 		{
-			cout << "The quiz is empty" << endl;
-			return false;
+			cout << "The quiz is empty" << endl;			
 		}
 	}
 
