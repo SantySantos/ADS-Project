@@ -1,7 +1,7 @@
 #include "Leaderboard.h"
 #include "iostream"
 
-
+/*
 using namespace std;
 
 void Leaderboard::Load(string& filename) {
@@ -88,4 +88,6 @@ void Leaderboard::UpdateScore(int quizID, const string& username, int score) {
 		}
 	}
 }
+
+*/
 
