@@ -7,7 +7,8 @@
 using namespace std;
 
 //constructor implementation
-MultChoiceQuestion::MultChoiceQuestion(string newQuestion, string choices[4], int index, int points) {
+/*
+* MultChoiceQuestion::MultChoiceQuestion(string newQuestion, string choices[4], int index, int points) {
 	QuizQuestion::question = newQuestion;
 
 	for (int i = 0; i < choices->size(); i++) {
@@ -17,6 +18,8 @@ MultChoiceQuestion::MultChoiceQuestion(string newQuestion, string choices[4], in
 	answerIndex = index;
 	QuizQuestion::pointValue = points;
 }
+*/
+
 
 MultChoiceQuestion::MultChoiceQuestion(string newQuestion, string choice1, string choice2, string choice3, string choice4, int index, int points)
 {
@@ -35,11 +38,21 @@ bool MultChoiceQuestion::Evaluate(int index) {
 		cout << "Correct answer!" << endl;
 		QuizManager::playerScore += pointValue; //adding the points to the score
 		cout <<  "current score: " << QuizManager::playerScore << endl;
+		cout << endl;
+		cout << "Please press enter to contine" << endl;
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		cin.get();
 		return true;	
 	}
 	else
 	{
 		cout << "Wrong answer!" << endl;
+		cout << "The correct answer is: " << choiceArr[answerIndex] << endl;
+		cout << "Please press enter to contine" << endl;
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		cin.get();
 		return false;
 	}
 }
@@ -71,8 +84,8 @@ void MultChoiceQuestion::DisplayQuestion() {
 		}
 		else
 		{
-			std::cout << "Please choose a valid option" << std::endl;
 			system("cls"); //clean the screen			
+			DisplayQuestion();
 		}
 	}
 	catch (const std::exception&)

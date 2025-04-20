@@ -30,7 +30,7 @@ std::string QuizManager::GetUsername() {
 void QuizManager::SetUsername() {
 
 	cin.clear();
-	cin.ignore();
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 	
 	std::string value; //variable to store the username
 
@@ -112,8 +112,8 @@ Quiz QuizManager::Create() {
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "How many points is this question worth?" << endl;
             cin >> points;
-            quiz.myQuestions->push_back(new MultChoiceQuestion(question, choices[0],choices[1],choices[2],choices[3], answerIndex, points));
-
+			quiz.myQuestions->push_back(new MultChoiceQuestion(question, choices[0], choices[1], choices[2], choices[3], answerIndex, points));
+            
         }
         else if(type == 2) {
             bool answer;
@@ -198,15 +198,15 @@ Quiz QuizManager::Load() { // static
 
 		cout << "Please choose one of the options:" << endl;
 
-		cin.ignore();
-		std::getline(cin, userInput); // Corrected the order of arguments for getline
-
 		//getting user input until it does not fail anymore and inserts a valid value
 		while (true)
 		{
 			try
-			{
+			{	
+				getline(cin, userInput); // Corrected the order of arguments for getline
+
 				userOption = std::stoi(userInput); //converting the string to int
+
 
 				if (userOption > 0 && userOption <= quizFileNames.size())
 				{
@@ -220,11 +220,22 @@ Quiz QuizManager::Load() { // static
 					std::getline(file, discardline, '\n');
 					cout << "discated line = " << discardline << endl;
 
+
+
 					while (file.peek() != EOF)
 					{
-
-						Chosenquiz.myQuestions->push_back(InsertingToQuiz(file)); //creating a question object and adding it to the quiz
-                        
+						QuizQuestion* tempQuestion = InsertingToQuiz(file); //creating a question object
+						if (tempQuestion != nullptr) //checking if the question is null
+						{
+							cout << "Address of temp quiz:" << tempQuestion <<endl;
+							Chosenquiz.myQuestions->push_back(tempQuestion); //adding the question to the quiz
+									
+						}
+						else
+						{
+							cout << "Error while creating the question" << endl;
+						}
+					
 					}
 					for (QuizQuestion* q : *(Chosenquiz.myQuestions)) {
 						cout << "Address in list: " << q << endl;
@@ -235,16 +246,16 @@ Quiz QuizManager::Load() { // static
 
 				}
 				else {
-					cout << "Please choose a valid option" << endl;
+
+					cout << "Please enter a valid option" << endl;
+					continue;
 				}
 			}
 			catch (std::exception)
 			{
-				cout << "Please enter a number" << endl;
+				cout << "Please enter a valid option" << endl;
+				continue; //continue the loop
 			}
-
-			cin.ignore();
-			std::getline(cin, userInput);
 		}
 	}
 	else {
@@ -257,6 +268,7 @@ Quiz QuizManager::Load() { // static
 
 	return Chosenquiz;
 }
+
 
 QuizQuestion* QuizManager::InsertingToQuiz(ifstream& file)
 {
@@ -285,12 +297,15 @@ QuizQuestion* QuizManager::InsertingToQuiz(ifstream& file)
 			tempIndex = std::stoi(tempCorrectIndex); //converting the string to int
 			std::getline(file, StempScore, '\n');
 			tempScore = std::stoi(StempScore);
-			MultChoiceQuestion *tempQuizQuestion =  new MultChoiceQuestion(tempQuestion, answers, tempIndex, tempScore);	
+			MultChoiceQuestion *tempQuizQuestion =  new MultChoiceQuestion(tempQuestion, answers[0],answers[1], answers[2], answers[3], tempIndex, tempScore);
+			/*
 			for (int i = 0; i < 4; i++)
 			{
 				tempQuizQuestion->choiceArr[i] = answers[i]; //setting the answers in the array
 				cout << tempQuizQuestion->choiceArr[i] << endl;
 			}
+			*/
+			
 			return tempQuizQuestion;
 		}
 		else if (tempQuizType == "True or False") //checking if the question type is true or false 
@@ -322,37 +337,52 @@ QuizQuestion* QuizManager::InsertingToQuiz(ifstream& file)
 	catch (const std::exception&)
 	{
 		cout << "Sorry, we have a problem..." << endl;
+		return nullptr;
 	}
+
+}
+
+void QuizManager::Information() {
+	cout << "This is a quiz application that allows you to create and play quizzes." << endl;
+	cout << "You can choose from a variety of quizzes or create your own." << endl;
+	cout << "You can choose to play a quiz and test your knowledge." << endl;
+	cout << "You can also create your own quiz and share it with others." << endl;
+	cout << "Please have into account that at the moment you are creating quizes, dont add any commas for anything, as it can CRASH the program" << endl;
+	cout << "Have fun!" << endl;
+
+	cout << "Press enter to go back to the main menu" << endl;
+	cin.clear();
+	cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+	cin.get(); //wait for the user to press any key
+	system("cls"); //clean the screen
+	DisplayOptions(); //display the options again
 
 }
 void QuizManager::OptionChosen(int currentOption) {
 
 	cin >> currentOption;
-
+	system("cls"); //clean the screen
 	switch (currentOption)
 	{
 	case 1:
 		QuizManager::quizToPlay = Load();
-		system("cls"); //clean the screen
 		quizToPlay.Evaluate();
-		cout << "Final Score: " << QuizManager::playerScore; //resetting the score
+		cout << "Final Score: " << QuizManager::playerScore << endl; //resetting the score
 		QuizManager::SetUsername(); //setting the username
 		break;
 	case 2:
 		Create();
 		break;
-	case 3:
-		cout << "You choose third option.\n";
+	case 3:QuizManager::Information();
 		break;
 	case 4:
 		cout << "You choose fourth option.\n";
 		break;
 	default:
 		cin.clear();
-		cin.ignore(4096, '\n');
-		//we ignore the following 4096 characters in the line as that is the max amount there can be in any compiler
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		cout << "Please choose a valid option\n";
-		OptionChosen(currentOption);
+		DisplayOptions(); //display the options again
 		break;
 	}
 }

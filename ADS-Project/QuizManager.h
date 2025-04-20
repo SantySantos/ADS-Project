@@ -23,13 +23,17 @@ public:
 
 	static Quiz quizToPlay;
 
+
 	//getter and setter
 	static std::string GetUsername();
 
 	static void SetUsername();
 
+	
 	//attributes
 	fs::path FilesFolder = fs::current_path();
+
+	 void Information();
 
 	const fs::path directoryQuestions = FilesFolder / "Quizes"; // Constant QUIZ_FOLDER 
 
