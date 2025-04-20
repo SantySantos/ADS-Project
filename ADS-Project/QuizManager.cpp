@@ -212,9 +212,18 @@ Quiz QuizManager::Load() { // static
 
 					while (file.peek() != EOF)
 					{
-
-						Chosenquiz.myQuestions->push_back(InsertingToQuiz(file)); //creating a question object and adding it to the quiz
-                        
+						QuizQuestion* tempQuestion = InsertingToQuiz(file); //creating a question object
+						if (tempQuestion != nullptr) //checking if the question is null
+						{
+							cout << "Address of temp quiz:" << tempQuestion <<endl;
+							Chosenquiz.myQuestions->push_back(tempQuestion); //adding the question to the quiz
+									
+						}
+						else
+						{
+							cout << "Error while creating the question" << endl;
+						}
+					
 					}
 					for (QuizQuestion* q : *(Chosenquiz.myQuestions)) {
 						cout << "Address in list: " << q << endl;
@@ -231,6 +240,9 @@ Quiz QuizManager::Load() { // static
 			catch (std::exception)
 			{
 				cout << "Please enter a number" << endl;
+				cin.clear();
+				cin.ignore(4096, '\n'); //we ignore the following 4096 characters in the line as that is the max amount there can be in any compiler
+				continue; //continue the loop
 			}
 
 			cin.ignore();
@@ -247,6 +259,7 @@ Quiz QuizManager::Load() { // static
 
 	return Chosenquiz;
 }
+
 
 QuizQuestion* QuizManager::InsertingToQuiz(ifstream& file)
 {
@@ -315,7 +328,25 @@ QuizQuestion* QuizManager::InsertingToQuiz(ifstream& file)
 	catch (const std::exception&)
 	{
 		cout << "Sorry, we have a problem..." << endl;
+		return nullptr;
 	}
+
+}
+
+void QuizManager::Information() {
+	cout << "This is a quiz application that allows you to create and play quizzes." << endl;
+	cout << "You can choose from a variety of quizzes or create your own." << endl;
+	cout << "You can choose to play a quiz and test your knowledge." << endl;
+	cout << "You can also create your own quiz and share it with others." << endl;
+	cout << "Please have into account that at the moment you are creating quizes, dont add any commas for anything, as it can CRASH the program" << endl;
+	cout << "Have fun!" << endl;
+
+	cout << "Press any key to go back to the main menu" << endl;
+	cin.clear();
+	cin.ignore(4096, '\n'); //we ignore the following 4096 characters in the line as that is the max amount there can be in any compiler
+	cin.get(); //wait for the user to press any key
+	system("cls"); //clean the screen
+	DisplayOptions(); //display the options again
 
 }
 void QuizManager::OptionChosen(int currentOption) {
@@ -334,8 +365,7 @@ void QuizManager::OptionChosen(int currentOption) {
 	case 2:
 		Create();
 		break;
-	case 3:
-		cout << "You choose third option.\n";
+	case 3:QuizManager::Information();
 		break;
 	case 4:
 		cout << "You choose fourth option.\n";
