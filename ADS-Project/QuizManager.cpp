@@ -63,6 +63,15 @@ vector<string> QuizManager::GetQuizFilesNames() {
 	return quizFileNames;
 }
 
+bool checkForCommas(string& s) {
+	for (int i = 0; i < s.length(); i++) {
+		if (s[i] == ',') {
+			return true;
+		}
+	}
+	return false;
+}
+
 Quiz QuizManager::Create() {
     int questionNum;
     Quiz quiz;
@@ -92,6 +101,7 @@ Quiz QuizManager::Create() {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cout << "Please choose a valid number." << endl;
+				continue;
             }
             else {
                 break;
@@ -99,19 +109,65 @@ Quiz QuizManager::Create() {
         }
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cout << "Enter the question " << i + 1 << ": " << endl;
-        getline(cin, question);
+		while (true) {
+			cout << "Enter the question " << i + 1 << ": " << endl;
+			getline(cin, question);
+			if (cin.fail() || checkForCommas(question) == true) {
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+				cout << "No commas allowed. Enter again." << endl;
+				continue;
+			}
+			else {
+				break;
+			}
+		}
         if (type == 1) {
             for (int j = 0; j < 4; j++) {
-                cout << "Type choice " << j + 1 << ": " << endl;
-                getline(cin,choices[j]);
+				string choice;
+				while (true) {
+					cout << "Type choice " << j + 1 << ": " << endl;
+					getline(cin, choice);
+					if (cin.fail() || checkForCommas(choice) == true) {
+						cin.clear();
+						cin.ignore(numeric_limits<streamsize>::max(), '\n');
+						cout << "No commas allowed. Enter again." << endl;
+						continue;
+					}
+					else {
+						break;
+					}
+				}
+				choices[j] = choice;
             }
-            cout << "Which choice is the correct one?" << endl;
-            cin >> answerIndex;
+			while (true) {
+				cout << "Which choice is the correct one?" << endl;
+				cin >> answerIndex;
+				if (cin.fail() || answerIndex < 1 || answerIndex > 4) {
+					cin.clear();
+					cin.ignore(numeric_limits<streamsize>::max(), '\n');
+					cout << "Enter a valid number" << endl;
+					continue;
+				}
+				else {
+					break;
+				}
+			}
             answerIndex--;
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "How many points is this question worth?" << endl;
-            cin >> points;
+			while (true) {
+				cout << "How many points is this question worth?" << endl;
+				cin >> points;
+				if (cin.fail()) {
+					cin.clear();
+					cin.ignore(numeric_limits<streamsize>::max(), '\n');
+					cout << "Enter a point amount." << endl;
+					continue;
+				}
+				else {
+					break;
+				}
+			}
 			quiz.myQuestions->push_back(new MultChoiceQuestion(question, choices[0], choices[1], choices[2], choices[3], answerIndex, points));
             
         }
@@ -147,16 +203,7 @@ Quiz QuizManager::Create() {
             file << "Multiple Choice, ";
             file << mcq->getQuestion() + ",";
             for (int i = 0; i < 4; i++) {
-				string choice = mcq->choiceArr[i];
-				size_t pos = 0;
-				while ((pos = choice.find("\"", pos)) != string::npos) {
-					choice.replace(pos, 1, "\"\"");
-					pos += 2;
-				}
-				if (choice.find(',') != string::npos || choice.find('"') != string::npos) {
-					choice = "\"" + choice + "\"";
-				}
-				file << choice;
+				file << mcq->choiceArr[i];
                 if (i != 3) {
                     file << ",";
                 }
