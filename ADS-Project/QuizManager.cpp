@@ -66,8 +66,18 @@ vector<string> QuizManager::GetQuizFilesNames() {
 Quiz QuizManager::Create() {
     int questionNum;
     Quiz quiz;
-    cout << "How many questions would you like to add?" << endl;
-    cin >> questionNum;
+	while (true) {
+		cout << "How many questions would you like to add?" << endl;
+		cin >> questionNum;
+		if (cin.fail() || questionNum < 1) {
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+			cout << "Please choose a valid number." << endl;
+		}
+		else {
+			break;
+		}
+	}
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     for (int i = 0; i < questionNum; i++) {
         int type;
