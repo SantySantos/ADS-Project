@@ -129,6 +129,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ADS-Project.cpp" />
+    <ClCompile Include="Leaderboard.cpp" />
     <ClCompile Include="MultChoiceQuestion.cpp" />
     <ClCompile Include="Quiz.cpp" />
     <ClCompile Include="QuizManager.cpp" />
