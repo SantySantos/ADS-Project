@@ -25,7 +25,7 @@ bool TrueFalseQuestion::Evaluate(bool answer) {
 		cout << "current score: " << QuizManager::playerScore << endl;
 
 		cout << endl;
-		cout << "Please press enter to contine" << endl;
+		cout << "Please press enter to continue" << endl;
 		cin.clear();
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		cin.get(); //wait for the user to press enter
@@ -47,7 +47,7 @@ bool TrueFalseQuestion::Evaluate(bool answer) {
 		}
 		cout << endl;
 
-		cout << "Please press enter to contine" << endl;
+		cout << "Please press enter to continue" << endl;
 		cin.clear();
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		cin.get(); //wait for the user to press enter	
