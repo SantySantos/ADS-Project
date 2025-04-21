@@ -259,7 +259,7 @@ Quiz QuizManager::Load() { // static
 		{
 			try
 			{	
-				getline(cin, userInput); // Corrected the order of arguments for getline
+				getline(cin, userInput); 
 
 				userOption = std::stoi(userInput); //converting the string to int
 
@@ -427,9 +427,11 @@ void QuizManager::OptionChosen(int currentOption) {
 		cout << "Final Score: " << QuizManager::playerScore << endl; //resetting the score
 		QuizManager::SetUsername(); //setting the username
 		//checking if the list is empty
-		
 		myLeaderboard.UpdateScore(1, QuizManager::GetUsername(), QuizManager::playerScore);
+		myLeaderboard.UpdateScore(1, "Rawlijngs", 1500);
+		myLeaderboard.UpdateScore(1, "45", 4150);
 		myLeaderboard.Save("leaderboard.csv");
+		//myLeaderboard.Load("leaderboard.csv");
 		break;
 	case 2:
 		Create();
@@ -437,10 +439,12 @@ void QuizManager::OptionChosen(int currentOption) {
 	case 3:QuizManager::Information();
 		break;
 	case 4:
-		myLeaderboard.Print();
+		myLeaderboard.Print("leaderboard.csv");
+		
 		break;
 	case 5:
-		cout << "Thanks for playing" << endl;
+		cout << "Thanks for playing :)"
+			<< endl;
 		break;
 	default:
 		cin.clear();
@@ -460,7 +464,7 @@ void QuizManager::DisplayOptions()
 		"1. Answer a quiz \n"
 		"2. Create a quiz \n"
 		"3. Information \n"
-		"4. Leaderboard \n";
+		"4. Leaderboard \n"
 		"5. Exit the application \n";
 	OptionChosen(currentOption);
 }

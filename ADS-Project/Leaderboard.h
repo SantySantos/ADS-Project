@@ -14,7 +14,7 @@ public:
     void Load(const std::string& filename);
     void Save(const std::string& filename);
     void UpdateScore(int quizID, const std::string& username, int score);
-    void Print()const;
+    void Print(const std::string& filename);
 
 
 private:
