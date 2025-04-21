@@ -428,8 +428,6 @@ void QuizManager::OptionChosen(int currentOption) {
 		QuizManager::SetUsername(); //setting the username
 		//checking if the list is empty
 		myLeaderboard.UpdateScore(1, QuizManager::GetUsername(), QuizManager::playerScore);
-		myLeaderboard.UpdateScore(1, "Rawlijngs", 1500);
-		myLeaderboard.UpdateScore(1, "45", 4150);
 		myLeaderboard.Save("leaderboard.csv");
 		//myLeaderboard.Load("leaderboard.csv");
 		break;
