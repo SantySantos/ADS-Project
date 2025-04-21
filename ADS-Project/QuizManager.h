@@ -8,6 +8,7 @@
 #include "MultChoiceQuestion.h"
 #include "TrueFalseQuestion.h"
 
+
 namespace fs = std::filesystem;
 
 class QuizManager {
@@ -46,8 +47,6 @@ public:
 	void OptionChosen(int option);
 
 	QuizQuestion* InsertingToQuiz(std::ifstream& file);
-
-	
 
 	vector<std::string> GetQuizFilesNames(); // Fixed: Use std::vector and std::string  
 
