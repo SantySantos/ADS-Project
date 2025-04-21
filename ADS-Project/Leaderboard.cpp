@@ -92,10 +92,35 @@ void Leaderboard::UpdateScore(int quizID, const std::string& username, int score
     }
 }
 
-void Leaderboard::Print() const {
+void Leaderboard::Print(const std::string& filename) {
+
+   leaderboard.clear();
+    std::ifstream MyFile(filename);
+    if (!MyFile.is_open()) {
+        std::cerr << "Could not open file: " << filename << std::endl;
+        return;
+    }
+
+    std::string line, username;
+    int quizID, score;
+
+    while (std::getline(MyFile, line)) {
+        std::stringstream ss(line);
+        ss >> quizID;
+
+        auto& scores = leaderboard[quizID];
+
+        while (ss >> username >> score) {
+            scores[username] = score;
+        }
+
+        leaderboard[quizID] = scores;
+    }
+
+    MyFile.close();
+
     for (const auto& quizEntry : leaderboard) {
         int quizID = quizEntry.first;
-        std::cout << "Quiz ID: " << quizID << "\n";
         SetColor(9);
         std::cout << "---------------------------\n";
         std::cout << "Username      | Score\n";
