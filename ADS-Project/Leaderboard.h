@@ -8,20 +8,16 @@
 #include <vector>
 #include <algorithm>
 
-using namespace std;
 
 class Leaderboard {
-
 public:
+    void Load(const std::string& filename);
+    void Save(const std::string& filename);
+    void UpdateScore(int quizID, const std::string& username, int score);
+    void Print()const;
 
-	map<int, map<string, int>> leaderboard;
-
-	void Load(string& filename);
-
-	void Save(string& filename);
-
-	void UpdateScore(int quizID, const string& username, int score);
 
 private:
-	const int BOARD_MAX = 5;
+    std::map<int, std::map<std::string, int>> leaderboard;
+    static const int BOARD_MAX = 5;
 };

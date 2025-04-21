@@ -7,7 +7,7 @@
 #include <fstream>
 #include <list>
 #include "Quiz.h"
-
+#include "Leaderboard.h"
 
 namespace fs = std::filesystem;
 
@@ -418,6 +418,7 @@ void QuizManager::OptionChosen(int currentOption) {
 
 	cin >> currentOption;
 	system("cls"); //clean the screen
+	Leaderboard myLeaderboard;
 	switch (currentOption)
 	{
 	case 1:
@@ -425,6 +426,10 @@ void QuizManager::OptionChosen(int currentOption) {
 		quizToPlay.Evaluate();
 		cout << "Final Score: " << QuizManager::playerScore << endl; //resetting the score
 		QuizManager::SetUsername(); //setting the username
+		//checking if the list is empty
+		
+		myLeaderboard.UpdateScore(1, QuizManager::GetUsername(), QuizManager::playerScore);
+		myLeaderboard.Save("leaderboard.csv");
 		break;
 	case 2:
 		Create();
@@ -432,7 +437,10 @@ void QuizManager::OptionChosen(int currentOption) {
 	case 3:QuizManager::Information();
 		break;
 	case 4:
-		cout << "You choose fourth option.\n";
+		myLeaderboard.Print();
+		break;
+	case 5:
+		cout << "Thanks for playing" << endl;
 		break;
 	default:
 		cin.clear();
@@ -452,6 +460,7 @@ void QuizManager::DisplayOptions()
 		"1. Answer a quiz \n"
 		"2. Create a quiz \n"
 		"3. Information \n"
-		"4. Exit the application \n";
+		"4. Leaderboard \n";
+		"5. Exit the application \n";
 	OptionChosen(currentOption);
 }

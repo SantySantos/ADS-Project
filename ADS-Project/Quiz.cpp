@@ -15,8 +15,6 @@ Quiz::Quiz() {
 //function implementation
 bool Quiz::Evaluate() {
 
-	//checking if the list is empty
-
 	for (QuizQuestion* q : *myQuestions) {
 
 		system("cls"); //clean the screen
@@ -30,6 +28,5 @@ bool Quiz::Evaluate() {
 			cout << "The quiz is empty" << endl;			
 		}
 	}
-
 	return true;
 }
