@@ -57,7 +57,7 @@ vector<string> QuizManager::GetQuizFilesNames() {
 	//looping thorught the contains of the file and getting the names of them
 	for (auto entry : fs::directory_iterator(directoryQuestions)) //auto is like var in c#, letting the complier figure out the type
 	{
-		quizFileNames.push_back(entry.path().filename().string()); //saving the file name in the list
+		quizFileNames.push_back(entry.path().filename().string()); //saving the file name in the vector
 	}
 
 	return quizFileNames;
@@ -227,7 +227,7 @@ Quiz QuizManager::Create() {
 	return quiz;
 }
 
-Quiz QuizManager::Load() { // static 
+Quiz QuizManager::Load() {
 
 	GetQuizFilesNames(); //getting the quiz file names
 
@@ -242,7 +242,6 @@ Quiz QuizManager::Load() { // static
 
 	if (fs::exists(directoryQuestions)) //checking if the dir exits, if not, create it
 	{
-		// PARSE THE FILE LINE BY LINE, FOR EACH LINE SPLIT USING THE DELIMITER "," AND STORE THE VALUES IN A QUIZ OBJECT
 
 		for (std::string myFile : quizFileNames)
 		{
@@ -264,7 +263,7 @@ Quiz QuizManager::Load() { // static
 				userOption = std::stoi(userInput); //converting the string to int
 
 
-				if (userOption > 0 && userOption <= quizFileNames.size())
+				if (userOption > 0 && userOption <= quizFileNames.size()) //making sure the int entered will be in the bounds of number of quizzes
 				{
 					//open the file
 					std::string chosenFile = quizFileNames[userOption - 1]; //getting the quiz chosen name from the vector.
@@ -274,9 +273,7 @@ Quiz QuizManager::Load() { // static
 					Chosenquiz.quizName = chosenFile; //setting the quiz name
 
 					std::getline(file, discardline, '\n');
-					cout << "discated line = " << discardline << endl;
-
-
+					cout << "discated line = " << discardline << endl; //for debugging 
 
 					while (file.peek() != EOF)
 					{
@@ -330,7 +327,7 @@ QuizQuestion* QuizManager::InsertingToQuiz(ifstream& file)
 {
 	try
 	{
-		//tempHolders
+		//temp Holders attributes 
 		std::string tempLine = ""; //variable to store the line
 		std::string tempQuizType = "";
 		std::string tempQuestion = "";
@@ -340,8 +337,9 @@ QuizQuestion* QuizManager::InsertingToQuiz(ifstream& file)
 		std::string StempScore = "";
 		int tempScore = 0;
 
-		getline(file, tempQuizType, ','); //reading the first line of the file
+		getline(file, tempQuizType, ','); //reading the type of question
 
+		// parsing the file using the delimiter "," in temp variables, and if everything goes as planned, it will return the question pointer
 		if (tempQuizType == "Multiple Choice") //checking if the question type is MULTCHOICE
 		{
 			std::getline(file, tempQuestion, ',');
@@ -354,13 +352,6 @@ QuizQuestion* QuizManager::InsertingToQuiz(ifstream& file)
 			std::getline(file, StempScore, '\n');
 			tempScore = std::stoi(StempScore);
 			MultChoiceQuestion *tempQuizQuestion =  new MultChoiceQuestion(tempQuestion, answers[0],answers[1], answers[2], answers[3], tempIndex, tempScore);
-			/*
-			for (int i = 0; i < 4; i++)
-			{
-				tempQuizQuestion->choiceArr[i] = answers[i]; //setting the answers in the array
-				cout << tempQuizQuestion->choiceArr[i] << endl;
-			}
-			*/
 			
 			return tempQuizQuestion;
 		}
@@ -386,8 +377,11 @@ QuizQuestion* QuizManager::InsertingToQuiz(ifstream& file)
 			TrueFalseQuestion *tempQuizQuestion = new TrueFalseQuestion(tempQuestion, tempIndex, tempScore);
 			return tempQuizQuestion; //returning the question object
 		}
-		
-			
+		else
+		{
+			cout << "Error while creating the question" << endl;
+			return nullptr; //returning null if the question type is not valid
+		}		
 		
 	}
 	catch (const std::exception&)
@@ -429,7 +423,6 @@ void QuizManager::OptionChosen(int currentOption) {
 		//checking if the list is empty
 		myLeaderboard.UpdateScore(1, QuizManager::GetUsername(), QuizManager::playerScore);
 		myLeaderboard.Save("leaderboard.csv");
-		//myLeaderboard.Load("leaderboard.csv");
 		break;
 	case 2:
 		Create();
